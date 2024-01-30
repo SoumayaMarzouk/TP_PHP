@@ -11,33 +11,25 @@ table, td, th {
 </style>
 </head>
 <body>
-
+<table>
+<tr><th>nom</th><th>moyenne</th></tr>
 <?php 
 require 'util.php';
 
-echo "<table>";
-echo "<tr><th>nom</th><th>moyenne</th></tr>";
-   
+
    
 //affichage avec tableau HTML
 foreach ($tab as $nom => $moy)
 {
     $chaine=couleur($moy);
-    echo "<tr>";
-    echo "<td>$nom</td><td style='background-color: $chaine;'>$moy</td>" ;
-    
-    
-    echo "</tr>";
-}
-echo "</table>";
-    
-function couleur($m)
-{
-    if($m<10)
-	  return'red';
-    else return '#4CAF50';
-}
+    ?>
 
-?>
+    <tr>
+    <td><?= $nom ?></td><td style='background-color: <?= $chaine ?>;'> <?= $moy ?></td>
+    </tr>
+
+<?php } ?>
+
+</table>
     </body>
 </html>

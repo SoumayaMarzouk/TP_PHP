@@ -12,12 +12,12 @@ table, td, th {
 </head>
 <body>
 
-<?php 
+ 
     
-echo "<table>";
-echo "<tr><th>nom</th><th>moyenne</th></tr>";
+<table>
+<tr><th>nom</th><th>moyenne</th></tr>
 
-
+<?php
 $tab=array("ali"=>2,"med"=>13,"Karim"=>12);
 
 function couleur($m)
@@ -38,11 +38,10 @@ foreach ($tab as $nom => $moy)
     
     echo "</tr>";
 }
-echo "</table>";
-    
-
+ 
 
 ?>
+</table>
     </body>
 </html>
 
