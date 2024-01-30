@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <style>
+
+        td {
+    vertical-align:top;
+}
+</style>
+</head>
+
+<body>
+
+
+    <h1>Saisir un article</h1><br><br>
+    <form action="article.php" method="GET">
+        <table>
+            <tr>
+                <td><label for="ref">r�f�rence</label>: </td>
+                <td><input name="ref" type="text" /></td>
+            </tr>
+            <tr>
+                <td><label for="libelle">libell�;</label>: </td>
+                <td><input name="libelle" type="text" /></td>
+            </tr>
+
+
+            <tr>
+                <td> <label for="four">Fournisseur</label>:</td>
+                <td>
+                    <select name="four[]" multiple size=2>
+                        <option selected="selected" value="fournisseur1">fournisseur1</option>
+                        <option value="fournisseur2">fournisseur2</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td> <label for="PV">Point de vente</label></td>
+                <td>
+                    <input type="checkbox" name="PV[]" value="Sfax">Sfax
+                    <br>
+                    <input type="checkbox" name="PV[]" value="Gabes">Gabes </td>
+            </tr>
+        </table>
+        <input type="submit" name="submit" value="Submit">
+
+
+    </form>
+
+</body>
+
+</html>
