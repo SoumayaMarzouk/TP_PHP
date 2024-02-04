@@ -1,35 +1,43 @@
 <html>
+
 <head>
-<style>
-table {
-    border-collapse: collapse;
-}
+    <style>
+        table {
+            border-collapse: collapse;
+        }
 
-table, td, th {
-    border: 1px solid black;
-}
-</style>
+        table,
+        td,
+        th {
+            border: 1px solid black;
+        }
+    </style>
 </head>
+
 <body>
-<table>
-<tr><th>nom</th><th>moyenne</th></tr>
-<?php 
-require 'util.php';
+    <table>
+        <tr>
+            <th>nom</th>
+            <th>moyenne</th>
+        </tr>
+        <?php
+        require 'util.php';
 
 
-   
-//affichage avec tableau HTML
-foreach ($tab as $nom => $moy)
-{
-    $chaine=couleur($moy);
-    ?>
 
-    <tr>
-    <td><?= $nom ?></td><td style='background-color: <?= $chaine ?>;'> <?= $moy ?></td>
-    </tr>
+        //affichage avec tableau HTML
+        foreach ($tab as $nom => $moy) {
+            $chaine = couleur($moy);
+        ?>
 
-<?php } ?>
+            <tr>
+                <td><?= $nom ?></td>
+                <td style='background-color: <?= $chaine ?>;'> <?= $moy ?></td>
+            </tr>
 
-</table>
-    </body>
+        <?php } ?>
+
+    </table>
+</body>
+
 </html>
