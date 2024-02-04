@@ -65,7 +65,7 @@ class Article
 
 
 $a1=new Article(324,"Souris",100,10);
-$a1::ajouter($a1)
+$a1::ajouter($a1);
 //$a2=new Article(325,"Tablette",250,70,["Four1","Four2"],["pv1","pv2"]);
 //$a3=new Article(326,"Ecran",470,80,"Four3","pv1");
 //echo $a1;

@@ -17,7 +17,7 @@ class User
         return isset($this->$attr ); }
         public function __toString() {
         $s="Vous êtes connectés avec l'utilisateur' $this->login";
-        return $s;
+        return $s;}
         public static function connect($login,$mdp){
             if($login != "admin" || $mdp != "admin")
             
@@ -27,5 +27,5 @@ class User
 
         }
     }
-}
+
 ?>
