@@ -25,6 +25,8 @@ $msgErreurLib="";
 $msgErreurPV="";
 $msgErreurPrix="";
 $msgErreurQte="";
+$msgErreurFour="";
+$submit=False;
 
  $ref="";
  $libelle="";
@@ -36,30 +38,46 @@ $msgErreurQte="";
 
  if(isset($_GET["ref"])) //si le formulaire a été soumis (l'utilisateur a cliqué sur "submit")
  {
+    $submit=True;
 	 if (!empty($_GET["ref"]))
 		 $ref=$_GET["ref"];
-	 else
+	 else {
 		  $msgErreurRef="le champ reference est requis";
+          $submit=False;
+     }
 	  if (!empty($_GET["prix"]))
 		 $prix=$_GET["prix"];
-	 else
+	 else {
 		  $msgErreurPrix="le champ Prix est requis";
+          $submit=False;
+     }
 	  if (!empty($_GET["qte"]))
 		 $qte=$_GET["qte"];
-	 else
+	 else {
 		  $msgErreurQte="le champ Qte en stock est requis";
+          $submit=False;
+     }
 	  
 	  if (!empty($_GET["libelle"]))
 		 $libelle=$_GET["libelle"];
-	 else
+	 else {
 		  $msgErreurLib="le champ libelle est requis";
+          $submit=False;
+     }
 	  
 	  if (!empty($_GET["PV"]))
 		 $PV=$_GET["PV"];
-	 else
+	 else {
 		  $msgErreurPV="il faut choisir au moins un point de vente";
+          $submit=False;
+     }
+    if (!empty($_GET["four"]))
+          $four=$_GET["four"];
+      else {
+           $msgErreurFour="il faut choisir au moins un fournisseur";
+           $submit=False;
+      }
 	  
-	  $four=$_GET["four"];
  }
    
 
@@ -71,42 +89,43 @@ $msgErreurQte="";
         <table>
             <tr>
                 <td><label for="ref">référence</label>: </td>
-                <td><input name="ref" type="text" value="<?php echo $ref;?>" /><span class="msgE">
-                        <?php echo $msgErreurRef; ?></span></td>
+                <td><input name="ref" type="text" value="<?= $ref?>" /><span class="msgE">
+                        <?= $msgErreurRef ?></span></td>
             </tr>
             <tr>
                 <td><label for="libelle">libellé</label>: </td>
-                <td><input name="libelle" type="text" value="<?php echo $libelle;?>"/>
+                <td><input name="libelle" type="text" value="<?= $libelle?>"/>
                 <span class="msgE">
-                        <?php echo $msgErreurLib; ?></span></td>
+                        <?= $msgErreurLib ?></span></td>
             </tr>
 			<tr>
                 <td><label for="prix">Prix</label>: </td>
-                <td><input name="prix" type="text" /><span class="msgE">
-                        <?php echo $msgErreurPrix; ?></span></td>
+                <td><input name="prix" type="text" value="<?= $prix?>"/><span class="msgE">
+                        <?= $msgErreurPrix ?></span></td>
             </tr>
 			<tr>
                 <td><label for="qte">Qte en stock</label>: </td>
-                <td><input name="qte" type="text" /><span class="msgE">
-                        <?php echo $msgErreurQte; ?></span></td>
+                <td><input name="qte" type="text" value="<?= $qte?>"/><span class="msgE">
+                        <?= $msgErreurQte ?></span></td>
             </tr>
 
             <tr>
                 <td> <label for="four">Fournisseur</label>:</td>
                 <td>
                     <select name="four[]" multiple size=2>
-                        <option selected="selected" value="fournisseur1">fournisseur1</option>
-                        <option value="fournisseur2">fournisseur2</option>
+                        <option value="f1" <?php if (in_array("f1",$four)) echo "selected"; ?> >fournisseur1</option>
+                        <option value="f2" <?php if (in_array("f2",$four)) echo "selected"; ?>>fournisseur2</option>
                     </select>
+                    <span class="msgE"><?=$msgErreurFour ?></span></td>
                 </td>
             </tr>
             <tr>
                 <td> <label for="PV">Point de vente</label></td>
                 <td>
-                    <input type="checkbox" name="PV[]" value="Sfax">Sfax
+                    <input type="checkbox" name="PV[]" value="Sfax" <?php if (in_array("Sfax",$PV)) echo "checked"; ?> >Sfax
                     <br>
-                    <input type="checkbox" name="PV[]" value="Gabes">Gabes <span class="msgE">
-                        <?php echo "  ".$msgErreurPV; ?></span></td>
+                    <input type="checkbox" name="PV[]" value="Gabes" <?php if (in_array("Gabes",$PV)) echo "checked"; ?>>Gabes <span class="msgE">
+                        <?=$msgErreurPV ?></span></td>
             </tr>
         </table>
         <input type="submit" name="submit" value="Submit">
@@ -114,8 +133,8 @@ $msgErreurQte="";
 
     </form>
 
-
-
+<?php
+if ($submit){ ?>
     <h3> Informations de l'article</h3><br><br>
     <span class="st">Référence:</span>
     <?php echo $ref;?><br>
@@ -140,7 +159,7 @@ $msgErreurQte="";
             echo "<li> $p </li>" ; 
         ?>
     </ul>
-
+<?php } ?>
 </body>
 
 </html>
