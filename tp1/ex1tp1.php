@@ -4,6 +4,7 @@ echo "<ul>";
 foreach($tab as $valeur)
 {
 	echo "<li>". $valeur ."</li>";
+	echo "<br>";
 }
 echo "</ul>";
 ?>
