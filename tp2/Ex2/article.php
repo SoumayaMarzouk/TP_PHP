@@ -17,8 +17,9 @@
     <?php
     $libelle = $_GET["libelle"];
     $ref = $_GET["ref"];
-    $four = $_GET["four"];
-    $PV = $_GET["PV"];
+    if(isset($_GET["four"])) $four = $_GET["four"];
+    if(isset($_GET["PV"])) $PV = $_GET["PV"];
+if(isset($ref)){
 ?>
     <h1> Informations de l'article</h1><br><br>
     <span class="st">Référence:</span>
@@ -44,6 +45,9 @@
                 foreach($PV as $p)
                 echo "<li> $p </li>" ; 
                 }	
+
+} else
+header ('Location:article.html');
         ?>
     </ul>
 </body>
