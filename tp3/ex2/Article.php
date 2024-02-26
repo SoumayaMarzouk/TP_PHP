@@ -41,31 +41,12 @@ class Article
                     </tr>";                    
         return $s;
     }
-    public static function ajouter($article)
-		{
-			include("connexion.php");
-		
-			$nb=$conn->exec("INSERT into article values('$article->reference','$article->libelle',$article->prix,$article->qteEnStock)") or die(print_r($conn->errorInfo()));
-			
-			return $nb;
-			}
-		
-		public static function supprimer($ref)
-		{
-			include("connexion.php");
-			$conn->exec("DELETE from article where ref='$ref'");
-		}
-        public static function modifier($ref)
-		{
-			include("connexion.php");
-			$conn->exec("UPDATE article SET libelle = :libelle, prix = :prix , 
-            Qtstock = :qtstock WHERE ref='$ref'");
-		}
+   
 } // fin de la classe
 
 
-$a1=new Article(324,"Souris",100,10);
-$a1::ajouter($a1);
+//$a1=new Article(324,"Souris",100,10);
+
 //$a2=new Article(325,"Tablette",250,70,["Four1","Four2"],["pv1","pv2"]);
 //$a3=new Article(326,"Ecran",470,80,"Four3","pv1");
 //echo $a1;
