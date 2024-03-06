@@ -66,11 +66,14 @@
         {
             include("connexion.php");
 
-            $nb = $conn->exec("insert into article values('$article->reference','$article->libelle',$article->prix,$article->Qte)") or die(print_r($conn->errorInfo()));
+            $nb = $conn->exec("insert into article values('$article->reference',
+            '$article->libelle',$article->prix,$article->Qte)") 
+            or die(print_r($conn->errorInfo()));
 
             foreach ($article->fournisseurs as $f) {
 
-                $conn->exec("insert into article_fournisseur values('$article->reference','$f')") or die(print_r($conn->errorInfo()));
+        $conn->exec("insert into article_fournisseur values('$article->reference'
+        ,'$f')") or die(print_r($conn->errorInfo()));
             }
             return $nb;
         }
@@ -79,15 +82,17 @@
         {
             include("connexion.php");
             $nb = $conn->exec("delete from article where ref='$ref'");
+            $conn->exec("delete from article_fournisseur where ref='$ref'");
             return $nb;
         }
         public static function modifierArticle($art)
         {
             include("connexion.php");
-            $nb = $conn->exec("update article SET ref = '$art->reference', libelle = '$art->libelle', prix = $art->prix, Qtstock=$art->Qte WHERE ref = '$art->reference'") or die(print_r($conn->errorInfo()));
+        $nb = $conn->exec("update article SET ref = '$art->reference', libelle = '$art->libelle', 
+        prix = $art->prix, Qtstock=$art->Qte WHERE ref = '$art->reference'") or die(print_r($conn->errorInfo()));
 
             if ($nb > 0) {
-                $conn->exec("DELETE from article_fournisseur where ref='$art->reference'");
+                $conn->exec("delete from article_fournisseur where ref='$art->reference'");
                 foreach ($art->fournisseurs as $f) {
 
                     $conn->exec("insert into article_fournisseur values('$art->reference','$f')") or die(print_r($conn->errorInfo()));
@@ -97,64 +102,24 @@
         }
 
         public static function AfficherArticles()
-        {   
-            include("connexion.php");
-            $listArticles = [];
-            $reqprep1 = $conn->prepare("select * from article");
-            $reqprep1->execute();
-            $resultat = $reqprep1->fetchAll();
-            foreach ($resultat as $ar) {
-                //var_dump($ar);
-                $reqprep2 = $conn->prepare("select * from article_fournisseur where ref=:ref");
-                $reqprep2->bindParam(':ref', $ar[0]);
-                $reqprep2->execute();
-                $resultatF = $reqprep2->fetchAll();
-                //récupérer le tableau des fournisseurs de l'article
-                $listFour = [];
-                foreach ($resultatF as $ligneF) {
-                    $listFour[] = $ligneF['id'];
-                }
-
-                $listArticles[] = new Article(
-                    $ar['ref'],
-                    $ar['libelle'],
-                    $listFour,
-                    $ar['prix'],
-                    $ar['Qtstock']
-                );
-            }
-            return $listArticles;
-        }
-
-        public static function chercherArticles($refLib, $pmin, $pmax)
         {
-
             include("connexion.php");
             $listArticles = [];
-            // requete
-            $req = "SELECT * FROM article WHERE 1=1";
-            if ($refLib != '') {
-                $req .= " AND ref LIKE '%$refLib%' OR libelle LIKE '%$refLib%'";
-            }
-
-            if ($pmin != '') {
-                $req .= " AND prix >= $pmin";
-            }
-            if ($pmax != '') {
-                $req .= " AND prix <= $pmax";
-            }
-            $sql = $conn->query($req);
-            $resultat = $sql->fetchAll();
-
-            foreach ($resultat as $ar) {
-                $sqlF = $conn->query("SELECT * from article_fournisseur where ref='{$ar['ref']}'");
-                $resultatF = $sqlF->fetchAll();//ref='{$ar['ref']}'
+            $sql = $conn ->prepare("select * from article ");
+            $sql ->execute();
+            //On affiche les infos de la table
+            $resultat =  $sql ->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($resultat as $ar) {                
+            $sqlF = $conn->prepare("SELECT * from article_fournisseur 
+            where ref=:ref");  
+            $sqlF->bindParam(':ref',$ar['ref']);
+            $sqlF ->execute();
+            $resultatF = $sqlF->fetchAll();
                 //récupérer le tableau des fournisseurs de l'article
                 $listFour = [];
                 foreach ($resultatF as $ligneF) {
-                    $listFour[] = $ligneF['id'];
-                }
-
+                        $listFour[] = $ligneF['id'];
+                        }           
                 $listArticles[] = new Article(
                     $ar['ref'],
                     $ar['libelle'],
@@ -180,8 +145,18 @@
     // // echo $a2;
 
     // echo "</table>";
+    /*
+    $sqlF = $conn->prepare("SELECT ref,id from article_fournisseur where ref=?");
+            $sqlF->bindParam(1,$ar['ref']);
+            $sqlF->bindColumn('ref', $ar['ref']);
+            $sqlF->execute();           
+            while($resultatF=$sqlF->fetch(PDO::FETCH_BOUND)) {
+                $listFour = [];
+                //foreach ($resultatF as $ligneF) {
+                    $listFour[] = $resultatF['id'];
+                 //  }            */
 
-
+    //}
 
     ?>
 </body>
